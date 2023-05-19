@@ -1,0 +1,20 @@
+{
+  "name": "bosta-assesment",
+  "version": "1.0.0",
+  "description": "bosta-be-assesment-18-5-2023",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ahmed Elsharkawy'",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.1.1",
+    "validator": "^13.9.0"
+  }
+}
