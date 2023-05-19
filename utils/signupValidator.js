@@ -7,7 +7,7 @@ const schema = {
     "properties": {
         "name":{
             "type":"string",
-            "pattern":"^[A-Za-z0-9 _]+$"
+            "pattern":"^[A-Za-z0-9_ ]{3,50}$"
         },
         "email":{
             "type":"string",
