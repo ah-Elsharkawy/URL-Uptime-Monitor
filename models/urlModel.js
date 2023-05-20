@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const valid = require("validator");
 
 let urlSchema = new mongoose.Schema({
-	url: {
+	link: {
+		type: String,
+		required: true,
+	},
+	userID: {
 		type: String,
 		required: true,
 	},
