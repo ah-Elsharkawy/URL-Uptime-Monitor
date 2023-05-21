@@ -9,14 +9,16 @@ const {
 	getUserURLs,
 	updateURL,
 	deleteURLByLink,
+	getUserURLsByTag
 } = require("../controllers/urlController");
 
 router.post("/", validateToken, validateURLData, addURL);
 
 router.get("/metrics", validateToken, validateAuth, getURLByLink);
 
-// get all urls for the user
 router.get("/all", validateToken, getUserURLs);
+
+router.get("/tag/:tag", validateToken, getUserURLsByTag)
 
 router.put("/", validateToken, validateURLData, validateAuth, updateURL);
 

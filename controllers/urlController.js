@@ -1,4 +1,5 @@
 const URL = require("../models/urlModel");
+const monitorWebsite = require("../utils/monitorUrl");
 
 let addURL = async (req, res) => {
 	try {
@@ -19,8 +20,9 @@ let addURL = async (req, res) => {
 		});
 
 		await newUrl.save();
+		monitorWebsite(link);
 		return res.status(200).json({
-			message: "URL added successfully",
+			message: "URL added successfully and started monitoring",
 		});
 	} catch (error) {
 		console.log(error);
@@ -53,7 +55,7 @@ let getUserURLs = async (req, res) => {
 		let urls = await URL.find({ userID: userID }).exec();
 
 		return res.status(200).json({
-			message: "URLs found",
+			message: "Your URLs",
 			urls: urls,
 		});
 	} catch (error) {
@@ -67,9 +69,9 @@ let getUserURLs = async (req, res) => {
 let updateURL = async (req, res) => {
 	try {
 		let { link } = req.url;
-
+		
 		let urlExists = await URL.findOne({ link: req.body.link }).exec();
-
+		// check if the new URL exists in another document
 		if (urlExists) {
 			if (urlExists.link !== link)
 				return res.status(400).json({
@@ -92,7 +94,7 @@ let updateURL = async (req, res) => {
 
 let deleteURLByLink = async (req, res) => {
 	try {
-		let {link} = req.url;
+		let { link } = req.url;
 
 		await URL.findOneAndDelete({ link: link });
 
@@ -105,6 +107,32 @@ let deleteURLByLink = async (req, res) => {
 			message: "Internal Server Error",
 		});
 	}
-}
+};
 
-module.exports = { addURL, getURLByLink, getUserURLs, updateURL, deleteURLByLink };
+let getUserURLsByTag = async (req, res) => {
+	try {
+		let { tag } = req.params;
+		let { userID } = req.body;
+
+		let urls = await URL.find({ tag: tag, userID: userID }).exec();
+
+		return res.status(200).json({
+			message: "Your URLs",
+			urls: urls,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			message: "Internal Server Error",
+		});
+	}
+};
+
+module.exports = {
+	addURL,
+	getURLByLink,
+	getUserURLs,
+	updateURL,
+	deleteURLByLink,
+	getUserURLsByTag,
+};
