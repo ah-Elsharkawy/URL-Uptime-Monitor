@@ -1,5 +1,5 @@
 const URL = require("../models/urlModel");
-const monitorWebsite = require("../utils/monitorUrl");
+const monitorWebsite = require("../utils/monitors/monitorUrl");
 
 let addURL = async (req, res) => {
 	try {

@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/userRouter");
 const urlRouter = require("./routes/urlRouter");
-const monitorAllUrls = require("./utils/monitorAllUrls");
+const monitorAllUrls = require("./utils/monitors/monitorAllUrls");
 const app = express();
 const PORT = process.env.PORT || 5000;
 

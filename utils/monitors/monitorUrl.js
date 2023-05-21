@@ -1,5 +1,8 @@
 const axios = require("axios");
-const URL = require("../models/urlModel");
+const URL = require("../../models/urlModel");
+const User = require("../../models/userModel");
+const sendEmail = require("../notifications/mailService");
+const { error } = require("ajv/dist/vocabularies/applicator/dependencies");
 
 async function monitorWebsite(link) {
 	const timeout = 5000;
@@ -15,19 +18,27 @@ async function monitorWebsite(link) {
 				break;
 			}
 			const start = Date.now();
-			const response = await axios.get(link, { timeout });
+			let currentStatus;
+
+			// Check if the website is up or down
+			try {
+				await axios.get(link, { timeout });
+				currentStatus = "up";
+			} catch (error) {
+				currentStatus = "down";
+			}
 			const end = Date.now();
 			const responseTime = end - start;
-			const currentStatus =
-				response.status >= 200 && response.status < 400 ? "up" : "down";
 
 			if (currentStatus != url.status) {
 				url.status = currentStatus;
-				// sendMail(user_email, currentStatus);
 				currentStatus === "down" ? (url.uptime = 0) : (url.downtime = 0);
+				let user = await User.findOne({ _id: url.userID });
+				sendEmail(user.email, user.name, currentStatus, url.link);
 			} else {
 				currentStatus === "up" ? (url.uptime += 10) : (url.downtime += 10);
 			}
+
 
 			url.history.push({
 				timestamp: start,
@@ -37,7 +48,7 @@ async function monitorWebsite(link) {
 			url.requests_count++;
 			url.total_response_time += responseTime;
 			url.outages = currentStatus === "down" ? url.outages + 1 : url.outages;
-            
+
 			await URL.findOneAndUpdate({ link: link }, url);
 
 			await new Promise((resolve) => setTimeout(resolve, pollingInterval));

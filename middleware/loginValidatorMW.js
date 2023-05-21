@@ -1,4 +1,4 @@
-const validator = require("../utils/loginValidator");
+const validator = require("../utils/validators/loginValidator");
 
 
 // Authentication(login) validator

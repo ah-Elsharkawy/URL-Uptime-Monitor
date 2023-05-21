@@ -1,4 +1,4 @@
-const URL = require("../models/urlModel");
+const URL = require("../../models/urlModel");
 const monitorUrl = require("./monitorUrl");
 
 async function monitorAllUrls() {

@@ -1,4 +1,4 @@
-const validator = require("../utils/urlValidator");
+const validator = require("../utils/validators/urlValidator");
 
 module.exports = (req, res, next) => {
     

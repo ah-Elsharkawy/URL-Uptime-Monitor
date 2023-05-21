@@ -1,6 +1,6 @@
-const validator = require("../utils/signupValidator");
+const validator = require("../utils/validators/signupValidator");
 
-// Authentication(login) validator
+// (signup) validator
 module.exports = (req, res, next) => {
 	let valid = validator(req.body);
 
