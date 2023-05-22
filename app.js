@@ -29,6 +29,9 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/url", urlRouter);
 
-app.listen(PORT, () => console.log(`listening to port ${PORT}`));
+// app.listen(PORT, () => console.log(`listening to port ${PORT}`));
+
 // start monitoring all the URLs in the database in case of the server gows down all the monitoring stops
-monitorAllUrls();
+// monitorAllUrls();
+
+module.exports = app;

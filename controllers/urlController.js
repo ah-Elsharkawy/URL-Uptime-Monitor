@@ -20,7 +20,9 @@ let addURL = async (req, res) => {
 		});
 
 		await newUrl.save();
-		monitorWebsite(link);
+
+		// start monitoring the URL
+		// monitorWebsite(link);
 		return res.status(200).json({
 			message: "URL added successfully and started monitoring",
 		});

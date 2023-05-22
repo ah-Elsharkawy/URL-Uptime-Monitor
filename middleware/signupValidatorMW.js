@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 		next();
 	} else {
 		res.status(403).json({
-			message: "invalid signup format",
+			message: "Invalid signup format",
 		});
 	}
 };

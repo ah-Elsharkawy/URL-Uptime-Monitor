@@ -28,7 +28,7 @@ let signup = async (req, res) => {
 		// save user to db
 		await user.save().then(() => console.log("user saved successfully"));
 		res.status(200).json({
-			message: "User created successfully",
+			message: "User added successfully",
 		});
 	} catch (err) {
 		console.log(err);
@@ -46,7 +46,7 @@ let login = async (req, res) => {
 		// checking if user exists
 		if (!user) {
 			return res.status(400).json({
-				message: "User does not exist",
+				message: "User doesn't exist",
 			});
 		}
 
@@ -69,7 +69,7 @@ let login = async (req, res) => {
 		//send the token
 		res.header("x-auth-token", token);
 		res.status(200).json({
-			message: "Login Successful",
+			message: "Logged in Successfully",
 		});
 	} catch (err) {
 		console.log(err);
