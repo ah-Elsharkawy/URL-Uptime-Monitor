@@ -12,6 +12,7 @@ const schema = {
 	properties: {
 		link: {
 			type: "string",
+			pattern: "^(https?)?://[^\\s/$.?#].[^\\s]*$",
 		},
 		userID: {
 			type: "string",

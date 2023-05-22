@@ -3,12 +3,6 @@ const app = require("../app");
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 
-afterAll(async () => {
-	// Close the MongoDB connection
-	await User.findOneAndDelete({ email: "ali@gmail.com" });
-	await mongoose.connection.close();
-});
-
 describe("Add new user", () => {
 	test("should return 403 as user name is less than 3 characters", async () => {
 		const res = await request(app).post("/user/signup").send({
@@ -107,4 +101,12 @@ describe("Login user", () => {
 		expect(res.body.message).toEqual("Logged in Successfully");
 		expect(res.headers["x-auth-token"]).toBeDefined();
 	});
+});
+
+afterAll(async () => {
+	// Remove the user from the database
+	await User.findOneAndDelete({ email: "ali@gmail.com" });
+
+	// Close the MongoDB connection
+	await mongoose.connection.close();
 });

@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
 	try {
 		let link = req.query.link;
 		link = link.slice(1, -1);
-
+		console.log(link);
 		const url = await URL.findOne({ link: link });
 
 		if (!url) {

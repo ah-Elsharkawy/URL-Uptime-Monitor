@@ -22,9 +22,10 @@ let addURL = async (req, res) => {
 		await newUrl.save();
 
 		// start monitoring the URL
-		// monitorWebsite(link);
+		if (process.env.NODE_ENV !== "test") monitorWebsite(link);
+
 		return res.status(200).json({
-			message: "URL added successfully and started monitoring",
+			message: "URL added successfully and monitoring started",
 		});
 	} catch (error) {
 		console.log(error);
@@ -71,13 +72,12 @@ let getUserURLs = async (req, res) => {
 let updateURL = async (req, res) => {
 	try {
 		let { link } = req.url;
-		
 		let urlExists = await URL.findOne({ link: req.body.link }).exec();
 		// check if the new URL exists in another document
 		if (urlExists) {
 			if (urlExists.link !== link)
 				return res.status(400).json({
-					message: "Can't update, URL already exists",
+					message: "Can't update, Link already exists",
 				});
 		}
 
