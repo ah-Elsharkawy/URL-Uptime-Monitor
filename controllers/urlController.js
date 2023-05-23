@@ -51,6 +51,33 @@ let getURLByLink = async (req, res) => {
 	}
 };
 
+let getURLReport = async (req, res) => {
+	try {
+		let report = {};
+		let url = req.url;
+		let {status, requests_count, outages, total_response_time, downtime, uptime, history} = url;
+
+		report.status = status;
+		report.availability = (requests_count - outages) / requests_count * 100;
+		report.outages = outages;
+		report.downtime = downtime;
+		report.uptime = uptime;
+		report.response_time = total_response_time / requests_count;
+		report.history = history;
+
+		return res.status(200).json({
+			message: "URL report",
+			report: report,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			message: "Internal Server Error",
+		});
+	}
+}
+
+
 let getUserURLs = async (req, res) => {
 	try {
 		let { userID } = req.body;
@@ -130,6 +157,7 @@ let getUserURLsByTag = async (req, res) => {
 	}
 };
 
+
 module.exports = {
 	addURL,
 	getURLByLink,
@@ -137,4 +165,5 @@ module.exports = {
 	updateURL,
 	deleteURLByLink,
 	getUserURLsByTag,
+	getURLReport
 };

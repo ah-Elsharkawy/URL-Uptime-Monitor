@@ -36,7 +36,7 @@ async function monitorWebsite(link) {
 				let user = await User.findOne({ _id: url.userID });
 				sendEmail(user.email, user.name, currentStatus, url.link);
 			} else {
-				currentStatus === "up" ? (url.uptime += 10) : (url.downtime += 10);
+				currentStatus === "up" ? (url.uptime += 600) : (url.downtime += 600);
 			}
 
 
@@ -46,7 +46,7 @@ async function monitorWebsite(link) {
 			});
 
 			url.requests_count++;
-			url.total_response_time += responseTime;
+			url.total_response_time += responseTime / 1000;
 			url.outages = currentStatus === "down" ? url.outages + 1 : url.outages;
 
 			await URL.findOneAndUpdate({ link: link }, url);

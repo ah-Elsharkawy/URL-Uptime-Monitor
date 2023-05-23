@@ -87,6 +87,50 @@ describe("Add URL", () => {
 	});
 });
 
+describe("Get URL report by link", () => {
+	test("should return 401 if token is not provided", async () => {
+		const res = await request(app).get(
+			"/url/report/?link='https%3A%2F%2Fwww.google.com"
+		);
+		expect(res.statusCode).toBe(401);
+		expect(res.body.message).toBe("Access denied, please login");
+	});
+
+	test("should return 400 if token is invalid", async () => {
+		const res = await request(app)
+			.get("/url/report/?link='https%3A%2F%2Fwww.google.com'")
+			.set("x-auth-token", "malformed token");
+		expect(res.statusCode).toBe(400);
+		expect(res.body.message).toBe("Invalid token");
+	});
+
+	test("should return 404 if link is not found", async () => {
+		const res = await request(app)
+			.get("/url/report/?link='https%3A%2F%2Fwww.youtube.com%2F'")
+			.set("x-auth-token", token);
+		expect(res.statusCode).toBe(404);
+		expect(res.body.message).toBe("URL not found");
+	});
+
+	test("should return 401 if the user is Unauthorized", async () => {
+		const res = await request(app)
+			.get("/url/report/?link='https%3A%2F%2Fwww.google.com'")
+			.set("x-auth-token", unauthorizedToken);
+		expect(res.statusCode).toBe(401);
+		expect(res.body.message).toBe("Unauthorized");
+	});
+
+	test("should return 200 and the url report as the user is authorized", async () => {
+		const res = await request(app)
+			.get("/url/report/?link='https%3A%2F%2Fwww.google.com'")
+			.set("x-auth-token", token);
+		expect(res.statusCode).toBe(200);
+		expect(res.body.message).toBe("URL report");
+		expect(res.body.report).toBeDefined();
+		
+	});
+});
+
 describe("Get all URLs created by the user", () => {
 	test("should return 401 if token is not provided", async () => {
 		const res = await request(app).get("/url/all");
