@@ -4,7 +4,7 @@ FROM node:alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install Python
+# Install Python (it was required during the building process for bcrybt module)
 RUN apk add --no-cache python3
 
 # Copy package.json and package-lock.json to the working directory
