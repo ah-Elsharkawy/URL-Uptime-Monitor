@@ -73,7 +73,6 @@ The APIs follows its route, every route consists of middlewares (for validation 
     {
     "name": "ahmed",
     "email": "ah.elsharkawye@gmail.com",
-    
     }
    ```
 
@@ -265,7 +264,7 @@ The APIs follows its route, every route consists of middlewares (for validation 
         "__v": 0
     }
     ```
-    
+
     `x-auth-token` is provided in the request header.
 
     Response:
@@ -304,9 +303,9 @@ The APIs follows its route, every route consists of middlewares (for validation 
         "__v": 0
     }
     }
-    the response returns the old version of the url
 
     ```
+    the response returns the old version of the url.
 
 - `DELETE: /url`:
   
