@@ -4,12 +4,29 @@ The App is a status monitoring RESTful API server that allows authenticated user
 
 ## Categories
 
-- [Middlewares](#middlewares).
-- [API Endpoints](#api-endpoints).
-  - [User APIs](#user-apis).
-  - [URL APIs](#url-apis).
-- [Docker container](#docker-containers).
-- [Testing](#testing).
+- [App Documentation](#app-documentation)
+  - [Categories](#categories)
+  - [Environment variables](#environment-variables)
+  - [Middlewares](#middlewares)
+  - [API Endpoints](#api-endpoints)
+    - [User APIs](#user-apis)
+    - [URL APIs](#url-apis)
+  - [Docker containers](#docker-containers)
+  - [Testing](#testing)
+
+## Environment variables
+
+Be sure to provide these environment variables before starting the app:
+
+```text
+MONGO_URI
+# For mailing notifications 
+MAIL_SERVICE #google, outlook, etc..
+NOTIFICATIONS_MAIL
+MAIL_PASS 
+JWT_SECRET = secret_key # the key used for JWT
+NODE_ENV # development by default and is changed to test during testing
+```
 
 ## Middlewares
 
@@ -192,7 +209,7 @@ The APIs follows its route, every route consists of middlewares (for validation 
 
   Request:
 
-  ```
+  ```text
   GET: http://localhost:7000/url/tag/t2
   ```
 
@@ -305,6 +322,7 @@ The APIs follows its route, every route consists of middlewares (for validation 
     }
 
     ```
+
     the response returns the old version of the url.
 
 - `DELETE: /url`:

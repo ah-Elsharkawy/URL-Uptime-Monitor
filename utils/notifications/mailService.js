@@ -2,15 +2,15 @@ const nodemailer = require("nodemailer");
 
 function sendEmail(email, name, status, URL) {
 	const transporter = nodemailer.createTransport({
-		service: "outlook",
+		service: process.env.MAIL_SERVICE,
 		auth: {
-			user: "ah.elsharkawye@outlook.com",
+			user: process.env.NOTIFICATIONS_MAIL,
 			pass: process.env.MAIL_PASS,
 		},
 	});
 
 	const mailOptions = {
-		from: "ah.elsharkawye@outlook.com",
+		from: process.env.NOTIFICATIONS_MAIL,
 		to: email,
 		subject: `Your URL Monitoring Update: Status - ${status}`,
 		text: `
