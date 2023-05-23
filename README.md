@@ -127,10 +127,44 @@ The APIs follows its route, every route consists of middlewares (for validation 
     "message": "URL added successfully and monitoring started"
     }
    ```
+- `GET: /url/report`:
+
+    Retrieves a report for a specific URL owned by the authenticated user, Example:
+
+  Request:
+
+  ```text
+  GET: http://localhost:7000/url/report?link='https%3A%2F%2Ffakestoreapi.com%2Fproducts%2F1'
+  ```
+
+  and `x-auth-token` is provided in the request header.
+
+  Response:
+
+    ```json
+    {
+    "message": "URL report",
+    "report": {
+        "status": "up",
+        "availability": 50,
+        "outages": 1,
+        "downtime": 0,
+        "uptime": 600,
+        "response_time": 1.5517500000000002,
+        "history": [
+            {
+                "timestamp": "2023-05-23T13:33:45.756Z",
+                "status": "up",
+                "_id": "646cc0ba842e1ca27215d623"
+            },
+        ]
+    }
+    }
+   ```
 
 - `GET: /url/metrics`:
   
-  Retrieves the metrics (report) for a specific URL owned by the authenticated user, Example:
+  Retrieves the metrics for a specific URL owned by the authenticated user, Example:
 
   Request:
 
